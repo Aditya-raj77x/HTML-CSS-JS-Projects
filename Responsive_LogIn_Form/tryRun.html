@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            display: grid;
+            background-color: #55efc4;
+            place-items: center;
+        }
+
+        .wrapper {
+            width: 380px;
+            background-color: #FFF;
+            border-radius: 5px;
+        }
+
+        .wrapper .title {
+            background-color: #00b894;
+            /* height: 20px; */
+            line-height: 80px;
+            padding-left: 20px;
+            border-radius: 5px 5px 0 0;
+            font-weight: 900;
+            font-size: 25px;
+            color: #FFF;
+        }
+
+        .wrapper form {
+            padding: 30px 20px 25px 20px;
+        }
+
+        .wrapper form .row {
+            height: 45px;
+            /* background-color: red; */
+            margin-bottom: 15px;
+            position: relative;
+
+        }
+
+        .wrapper form .row input {
+            height: 100%;
+            width: 100%;
+            padding-left: 60px;
+            /* border: none; */
+            font-size: 17px;
+            border-radius: 5px;
+            border: 1px solid lightgray;
+            outline: none;
+        }
+
+        .wrapper form .row i {
+            position: absolute;
+            height: 100%;
+            width: 47px;
+            justify-content: center;
+            border-radius: 5px 0 0 5px;
+            align-items: center;
+            display: flex;
+            background-color: #55efc4;
+            border: 1px solid #00b894;
+            color: #FFF;
+
+        }
+
+        .wrapper form .button input {
+            padding-left: 0;
+            background-color: #55efc4;
+            border: 1px solid #00b894;
+            font-size: 20px;
+            font-weight: 900;
+            color: #FFF;
+            cursor: pointer;
+
+        }
+
+        .wrapper form .button a {
+            display: flex;
+            justify-content: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 18px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="title"><span>Login Form</span></div>
+        <form action="#">
+            <div class="row">
+                <i class="fa-solid fa-circle-user"></i>
+                <input type="text" placeholder="Enter Name or Phone" required>
+            </div>
+            <div class="row">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" placeholder="Password" required>
+            </div>
+            <div class="row button">
+                <input type="submit" value="Login">
+                <div class="pass"><a href="#">Forget Password?</a></div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
