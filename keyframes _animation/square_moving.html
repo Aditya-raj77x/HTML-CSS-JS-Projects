@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .paa {
+            height: 400px;
+            width: 400px;
+            background-color: cadetblue;
+            margin: 50px;
+            position: relative;
+            display: flex;
+        }
+
+        .child {
+            height: 50px;
+            position: absolute;
+            width: 35px;
+            /* background-color: red; */
+        }
+
+
+        .child:first-child {
+            top: 22px;
+            left: 65px;
+            animation-name: run;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in;
+        }
+
+        .child:last-child {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 250px;
+            width: 250px;
+            background-color: green;
+        }
+
+        @keyframes run {
+            0% {
+                top: 22px;
+                left: 65px;
+            }
+
+            25% {
+                top: 22px;
+                transform: rotate(1deg);
+                left: 330px;
+            }
+
+            25.99% {
+                top: 22px;
+                left: 330px;
+                transform: rotate(90deg);
+            }
+
+
+            50% {
+                top: 310px;
+                transform: rotate(90deg);
+                left: 330px;
+            }
+
+            50.99% {
+                top: 320px;
+                transform: rotate(180deg);
+                left: 330px;
+            }
+
+            75% {
+                top: 320px;
+                transform: rotate(180deg);
+                left: 65px;
+            }
+
+            75.99% {
+                top: 320px;
+                transform: rotate(270deg);
+                left: 30px;
+            }
+
+            100% {
+                top: 22px;
+                transform: rotate(270deg);
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="paa">
+        <!-- a png img here -->
+        <img class="child" src="./game-removebg-preview.png">
+        <div class="child"></div>
+    </div>
+</body>
+
+</html>
