@@ -78,19 +78,55 @@
 // let priceOnly = data.map(e => e.price);
 // console.log(nameOnly)
 // console.log(priceOnly)
-let members = [45, 10, 14, 16, 85, 65, 42, 32, 31];
-// members.filter((e) => console.log(e > 18));
-members.filter((e) => e > 18);
-// console.log(members);
-let plusAge = members.filter(e => e > 18);
-console.log(plusAge)
+// let members = [45, 10, 14, 16, 85, 65, 42, 32, 31];
+// // members.filter((e) => console.log(e > 18));
+// members.filter((e) => e > 18);
+// // console.log(members);
+// let plusAge = members.filter(e => e > 18);
+// console.log(plusAge)
 
 
+// const users = ["Alice", "Bob", "Charlie"];
+
+// // Let's just say hello to everyone
+// users.forEach((name) => {
+//     console.log("Hello, " + name + "!");
+// });
+// Output in console:
+// "Hello, Alice!"
+// "Hello, Bob!"
+// "Hello, Charlie!"
+
+// If you try to save it to a variable, it fails:
+// const result = users.forEach(name => name);
+// console.log(result); // Output: undefined
 
 
+// const products = [
+//     { name: "Laptop", price: 1000 },
+//     { name: "Phone", price: 500 },
+//     { name: "Tablet", price: 300 }
+// ];
+
+// // Let's create a new array that ONLY contains the prices
+// const pricesOnly = products.map((item) => {
+//     return item.price;
+// });
+
+// console.log(pricesOnly);
+// // Output: [1000, 500, 300]
+// // The original 'products' array is completely untouched!
 
 
+const numbers = [15, 2, 8, 42, 7, 101];
 
+// Let's keep only the numbers greater than 10
+const bigNumbers = numbers.filter((num) => {
+    return num > 10; // This is the True/False test
+});
 
+console.log(bigNumbers);
+// Output: [15, 42, 101]
+console.log(numbers) // orignal  data stays the same 
 
 
