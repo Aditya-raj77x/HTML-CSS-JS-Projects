@@ -1,4 +1,4 @@
-//let a = ["appke", "banana", "mango", "grappes"]
+// let a = ["appke", "banana", "mango", "grappes"]
 // console.log(a);
 // a.push("run");
 // console.log(a);
@@ -15,7 +15,8 @@
 // console.log(a);
 // console.log(g);
 
-// 2nd wala
+// // 2nd wala
+// let a = ["appke", "banana", "mango", "grappes"]
 // console.log(a.includes("mango"));
 // console.log(a.includes("Mango"));
 // console.log(a.includes("appke"));
@@ -33,7 +34,7 @@
 // let c = score.slice(1, 3);
 // console.log(c)
 
-let score = [1, 2, 3, 4, 5]
+// let score = [1, 2, 3, 4, 5]
 // score.splice(2, 0, 66);
 // console.log(score)
 // at 3 position
@@ -44,9 +45,46 @@ let score = [1, 2, 3, 4, 5]
 // console.log(score)
 
 // score.splice(2, 1);
-score.splice(2, 2);
+// score.splice(2, 2);
 
-console.log(score)
+// console.log(score)
+
+// let arr = [1, 2, 3, 4, 5];
+// arr.splice(3);
+// console.log(arr);
+// arr.splice(2, 2);
+// console.log(arr);
+// arr.splice(1, 0, 45, 100)
+// console.log(arr)
+// arr.splice(2, 2, 45, 80);
+// console.log(arr)
+
+// let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+// let newarr = arr.forEach((e) => {
+//     // console.log(e * 2);
+// });
+// console.log(newarr);
+
+
+// let data = [
+//     { name: "laptop", price: 1000 },
+//     { name: "phone", price: 5000 },
+//     { name: "charger", price: 500 },
+// ];
+// // data.map((e) => console.log(e.name.toUpperCase()));
+// let nameOnly = data.map((e) => {
+//     return e.name
+// })
+// let priceOnly = data.map(e => e.price);
+// console.log(nameOnly)
+// console.log(priceOnly)
+let members = [45, 10, 14, 16, 85, 65, 42, 32, 31];
+// members.filter((e) => console.log(e > 18));
+members.filter((e) => e > 18);
+// console.log(members);
+let plusAge = members.filter(e => e > 18);
+console.log(plusAge)
+
 
 
 
