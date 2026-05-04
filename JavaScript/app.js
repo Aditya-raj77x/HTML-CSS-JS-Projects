@@ -118,7 +118,7 @@
 // // The original 'products' array is completely untouched!
 
 
-const numbers = [15, 2, 8, 42, 7, 101];
+/* const numbers = [15, 2, 8, 42, 7, 101];
 
 // Let's keep only the numbers greater than 10
 const bigNumbers = numbers.filter((num) => {
@@ -128,5 +128,41 @@ const bigNumbers = numbers.filter((num) => {
 console.log(bigNumbers);
 // Output: [15, 42, 101]
 console.log(numbers) // orignal  data stays the same 
+ */
+/* let arr = [1, 2, 3, 4]
+let newArr = arr.reduce((e, t) => e += t);
+console.log(newArr); */
+
+/* let arr = [10, 50, 20, 30, 80, 100];
+let allgreatThen15 = arr.every((e) => e > 15);
+console.log(allgreatThen15);
+console.log(arr) */
+
+/* const cart = [
+    { name: "Laptop", price: 10, inStock: true },
+    { name: "Headphones", price: 150, inStock: false },
+    { name: "Mouse", price: 40, inStock: true },
+    { name: "Keyboard", price: 80, inStock: true }
+];
+let avaliable = cart.filter((e) => e.inStock === true);
+// console.log(avaliable)
+let totalMrp = avaliable.reduce((t, e) => t + e.price, 0);
+console.log(totalMrp);
 
 
+ */
+
+const users = [
+    { username: "js_ninja", status: "active" },
+    { username: "coder_dude", status: "offline" },
+    { username: "web_master", status: "active" },
+    { username: "guest123", status: "banned" }
+];
+
+const activeUserMessage = users
+    .filter(user => user.status === "active")
+    .map(user => user.username)
+    .join(", ");
+
+console.log("Currently online: " + activeUserMessage);
+// Output: Currently online: js_ninja, web_master
