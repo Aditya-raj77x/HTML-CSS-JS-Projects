@@ -5,10 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, blue, skyblue, white);
+        }
+
+        input {
+            outline: none;
+            border: none;
+            border: 1px solid black;
+            border-radius: 8px;
+            box-shadow: 5px 5px 5px black;
+            height: 32px;
+            width: 145px;
+        }
+    </style>
 </head>
 
 <body>
-    <script src="./app.js"></script>
+    <input type="text" class="search-box" autofocus placeholder="Search Contacts">
+    <ul class="contact-list"></ul>
+    <script>
+        const contact = ["rahul", "rohan", "sohan", "amit", "neta"];
+        const searchBox = document.querySelector(".search-box");
+        const contactLlist = document.querySelector(".contact-list");
+        function displayContact(arr) {
+            contactLlist.innerHTML = "";
+            arr.forEach(element => {
+                const li = document.createElement("li");
+                li.innerText = element;
+                contactLlist.appendChild(li);
+            });
+        }
+        displayContact(contact);
+        searchBox.addEventListener("input", () => {
+            const searchTerm = searchBox.value.toLowerCase().trim();
+            const filterContact = contact.filter((person) => {
+                const lowerCase = person.toLowerCase();
+                return lowerCase.includes(searchTerm);
+            })
+            displayContact(filterContact)
+        })
+    </script>
+    <!-- <script src="./app.js"></script> -->
 </body>
 
 </html>
