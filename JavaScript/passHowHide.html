@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="password" class="pass" placeholder="Enter Pass" autofocus>
+    <button class="btn">show</button>
+    <script>
+        const pass = document.querySelector(".pass");
+        const btn = document.querySelector(".btn")
+        btn.addEventListener("click", () => {
+            if (pass.type === "password") {
+                pass.type = "text";
+                btn.innerText = "hide";
+            }
+            else {
+                pass.type = "password";
+                btn.innerText = "show";
+
+            }
+        })
+    </script>
+
+</body>
+
+</html>
