@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -56,7 +56,48 @@
             displayContact(filterContact)
         })
     </script>
-    <!-- <script src="./app.js"></script> -->
+    <script src="./app.js"></script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" placeholder="Search Contacts" autofocus class="searchBox">
+    <ul class="displayContact"></ul>
+    <script>
+        const contacts = ["sonu", "mom", "anuj", "kran banda", "deep sir", "rani", "shivam", "raju"]
+        const searchBox = document.querySelector(".searchBox");
+        const displayContact = document.querySelector(".displayContact");
+
+        const display = (arr) => {
+            displayContact.innerHTML = "";
+            arr.map((e) => {
+                const li = document.createElement("li");
+                li.innerText = e.toLowerCase();
+                displayContact.appendChild(li);
+            })
+        }
+        display(contacts);
+        searchBox.addEventListener("input", () => {
+            let searchData = searchBox.value.toLowerCase();
+            // console.log(lowerCase);
+            let filterContact = contacts.filter((e) => {
+                let lowerCase = e.toLowerCase();
+                return lowerCase.includes(searchData);
+            })
+            display(filterContact);
+        })
+
+
+    </script>
 </body>
 
 </html>
