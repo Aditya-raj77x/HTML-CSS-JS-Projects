@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" value="SUMMER25" readonly class="data"><br>
+    <button class="btn">copy code</button>
+    <script>
+        const data = document.querySelector(".data");
+        const btn = document.querySelector(".btn");
+        btn.addEventListener("click", () => {
+            let value = data.value;
+            console.log(value);
+            navigator.clipboard.writeText(value);
+            btn.innerText = "copied";
+            setTimeout(() => {
+                btn.innerText = "copy code"
+            }, 2000)
+        })
+    </script>
+</body>
+
+</html>
