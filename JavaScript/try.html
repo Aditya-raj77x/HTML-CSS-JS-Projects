@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*  const user = {
+             "user name": "coder_ninja",
+             age: 25,
+             isPremiumMember: true,
+             hobbies: ["reading", "gaming", "coding"] // You can put arrays inside objects!
+         }; */
+        // let data = "age";
+        // document.write(user[data]);
+        // document.write(user);
+        // console.log(user.age)
+        // document.write(user["user name"]);
+        // console.log(user)
+
+        /*  const player = {
+             name: "Mario",
+             score: 100
+         };
+         // ADDING a new property:
+         player.city = "hamirpur";
+         player["time"] = "12: 11 am";
+         // MODIFYING an existing property:
+         player.score = 500;
+         player["name"] = "Goku";
+ 
+         // DELETING a property:
+         delete player.name;
+ 
+         console.log(player); */
+        /*  const smartHome = {
+             temperature: 72,
+             doorLocked: true,
+ 
+             // This is a method!
+             unlockDoor: function () {
+                 // The word "this" refers to the object itself
+                 this.doorLocked = false;
+                 console.log("The door is now unlocked.");
+             }
+         };
+ 
+         smartHome.unlockDoor();
+         console.log(smartHome.doorLocked); // Output: false
+  */
+
+
+        // greet("aditya")
+        // const obj = {
+        //     user: "Aditya",
+        //     isAdmin: true,
+        //     fun: greet
+        // }
+        // console.log(obj.fun(obj.user))
+        // function greet(data) {
+        //     console.log("hello " + data);
+        //     return ""
+        // }
+        // const data = {
+        //     name: "Aditya",
+        //     isAdmin: true,
+        //     statusCheck: function (isAdmin) {
+        //         console.log("User Name :", data.name)
+        //         console.log("Admin Status :", this.isAdmin)
+        //         console.log("parameter that  passed", isAdmin)
+        //         return ""
+        //     }
+        // }
+        // // console.log(data);
+        // // console.log(data.name);
+        // console.log(data.statusCheck(false));
+        const print = {
+            upper: function (data) {
+                document.write(data.toUpperCase() + "<br>");
+            },
+            lower: function (data) {
+                document.write(data.toLowerCase() + "<br>");
+
+            }
+
+        }
+        let a = "aditya";
+        let b = "Raj"
+        print.upper(a);
+        print.lower(b);
+
+    </script>
+
+
+</body>
+
+</html>
