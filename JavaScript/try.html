@@ -32,15 +32,15 @@
          // MODIFYING an existing property:
          player.score = 500;
          player["name"] = "Goku";
- 
+
          // DELETING a property:
          delete player.name;
- 
+
          console.log(player); */
         /*  const smartHome = {
              temperature: 72,
              doorLocked: true,
- 
+
              // This is a method!
              unlockDoor: function () {
                  // The word "this" refers to the object itself
@@ -48,7 +48,7 @@
                  console.log("The door is now unlocked.");
              }
          };
- 
+
          smartHome.unlockDoor();
          console.log(smartHome.doorLocked); // Output: false
   */
@@ -78,20 +78,91 @@
         // // console.log(data);
         // // console.log(data.name);
         // console.log(data.statusCheck(false));
-        const print = {
-            upper: function (data) {
-                document.write(data.toUpperCase() + "<br>");
-            },
-            lower: function (data) {
-                document.write(data.toLowerCase() + "<br>");
+        // const print = {
+        //     upper: function (data) {
+        //         document.write(data.toUpperCase() + "<br>");
+        //     },
+        //     lower: function (data) {
+        //         document.write(data.toLowerCase() + "<br>");
 
+        //     }
+
+        // }
+        // let a = "aditya";
+        // let b = "Raj"
+        // print.upper(a);
+        // print.lower(b);
+        // console.log(window);
+        // console.log(this)
+        // const obj = {
+        //     user: "Aditya",
+        //     age: 22,
+        //     print: function () {
+        //         // console.log(this)
+        //         console.log(`user name is ${this.user} and age is ${this.age}`);
+        //     }
+        // }
+        // // console.log(obj);
+        // // console.log(obj.print())
+        // // obj.print()
+        // // console.log(this)
+        // obj.print();
+
+        // let user = {
+        //     name: "aditya",
+        //     country: "india",
+        //     status: "admin"
+        // }
+        // for (let key in user) {
+        //     console.log(key + ':' + user[key]);
+        // }
+        // let keys = Object.keys(user);
+        // console.log(keys);
+        // let values = Object.values(user);
+        // console.log(values);
+
+        // let wholeData = Object.entries(user);
+        // console.log(wholeData);
+        // class user {
+        //     // The constructor runs automatically when you create a new User
+        //     constructor(name, age, status) {
+        //         this.name = name;
+        //         this.age = age;
+        //         this.status = status;
+        //     }
+        //     // a method share by all the users 
+        //     login() {
+        //         console.log(`${this.name} has log in successfully`);
+        //     }
+        // }
+        // // Using the 'new' keyword to create instances of the class
+        // const user1 = new user("aditya", 22, "admin");
+        // console.log(user1);
+        // user1.login();
+        // const user2 = new user("alice", 24, "manager");
+        // console.log(user2);
+        // user2.login();
+
+
+
+        const data = {
+            state: "up",
+            cities: {
+                hmr: 43,
+                kan: 45
             }
-
         }
-        let a = "aditya";
-        let b = "Raj"
-        print.upper(a);
-        print.lower(b);
+        const newData = structuredClone(data);
+        // console.log(newData);
+        newData.cities.hmr = "aaa";
+        console.log(newData);
+        console.log(data);
+
+
+
+
+
+
 
     </script>
 
