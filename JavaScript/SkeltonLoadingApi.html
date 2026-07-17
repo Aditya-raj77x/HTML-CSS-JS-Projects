@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #search-input {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: #3498db;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .user-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #3498db;
+        }
+
+        .user-card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .user-card p {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        /* skeleton loading */
+
+        .skeleton {
+            background: #eee;
+            background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+            border-radius: 5px;
+            background-size: 200% 100%;
+            animation: 1.5s shine linear infinite;
+        }
+
+        .skeleton-title {
+            width: 60%;
+            height: 25px;
+            margin-bottom: 15px;
+        }
+
+        .skeleton-text {
+            width: 100%;
+            height: 15px;
+            margin-top: 10px;
+        }
+
+        .skeleton-text-short {
+            width: 80%;
+            height: 15px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes shine {
+            to {
+                background-position-x: -200%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-container">
+        <h1>User Directory</h1>
+        <input type="text" id="search-input" placeholder="Search by Name or Email....">
+    </div>
+    <div id="container"></div>
+    <script>
+        const container = document.querySelector("#container");
+        const searchInput = document.querySelector("#search-input");
+        let allUsers = [];
+        // function randor krne ke liye 
+        const rendorCards = (usersToRendor) => {
+            if (usersToRendor.length === 0) {
+                container.innerHTML = `<p style="text-alig:center;grid-column:1/-1;">No Users Found</p>`
+                return;
+            }
+            const html = usersToRendor.map(user => `
+            <div class="user-card">
+                <h2>${user.name}</h2>
+                <p><b>Email: ${user.email}</b></p>
+                <p><b>Phone: ${user.phone}</b></p>
+                <p><b>Company: ${user.company.name}</b></p>
+                
+            </div>
+            `).join('');
+            container.innerHTML = html;
+        };
+        // fake loading screen bnane ke liye 
+        const renderSkeleton = () => {
+            let skeletonHTML = " ";
+            for (let i = 0; i < 6; i++) {
+                skeletonHTML += `
+                <div class="user-card">
+                    
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text-short"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                                   
+                </div>
+                `;
+            }
+            container.innerHTML = skeletonHTML;
+        }
+        // main wala function data fetch krne ke liye
+
+        const fetchUsers = async () => {
+            renderSkeleton();
+            try {
+                respose = await fetch("https://jsonplaceholder.typicode.com/users");
+                if (!respose.ok) { throw new Error("Http error ") };
+                allUsers = await respose.json();
+                setTimeout(() => { rendorCards(allUsers) }, 1000)
+            }
+            catch (error) {
+                container.innerHTML = `<p class="color:red;text-align-center;">Failed to load the data</p>`
+            }
+        }
+        // evenlistner add krna 
+        searchInput.addEventListener("input", (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const fillteredUsers = allUsers.filter((user) => {
+                return user.name.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm);
+            })
+            rendorCards(fillteredUsers)
+        })
+
+        // app start krna 
+        fetchUsers();
+    </script>
+</body>
+
+</html>

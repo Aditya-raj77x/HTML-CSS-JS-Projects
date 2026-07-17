@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perjalanan Kita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --bg-deep: #0f0a1a;
+            --bg-purple: #1b0f2e;
+            --primary-pink: #f472b6;
+            --primary-purple: #a78bfa;
+            --primary-glow: rgba(244, 114, 182, 0.45);
+            --text-white: #f8fafc;
+            --text-gray: #c7c9d1;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --font-heading: "Playfair Display", serif;
+            --font-body: "Lato", sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            inset: 0;
+            background: radial-gradient(circle at top,
+                    #2a145f 0%,
+                    #160a2d 40%,
+                    #0f0a1a 100%);
+            z-index: -2;
+        }
+
+        .star-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                    #3b0764 0%,
+                    #1b0f2e 45%,
+                    #0f0a1a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .welcome-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .fade-text {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ffffff, var(--primary-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade-text-sub {
+            color: var(--text-gray);
+            opacity: 0.85;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .btn-open {
+            padding: 14px 45px;
+            background: linear-gradient(135deg,
+                    var(--primary-pink),
+                    var(--primary-purple));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-open:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 45px rgba(167, 139, 250, 0.6);
+        }
+
+        .hidden-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .show-content {
+            display: block;
+            opacity: 1;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            font-family: var(--font-heading);
+            background: linear-gradient(135deg, #ffffff 20%, var(--primary-pink) 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.2));
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .timer-wrapper {
+            display: flex;
+            gap: 20px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 30px 50px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .time-segment span:first-child {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            background: linear-gradient(to bottom, #fff, var(--primary-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .time-segment .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-gray);
+            margin-top: 5px;
+            display: block;
+        }
+
+        .separator {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: -5px;
+        }
+
+        .scroll-indicator {
+            margin-top: 80px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .scroll-indicator:hover {
+            color: var(--primary-pink);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .section {
+            padding: 100px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-family: var(--font-heading);
+            background: linear-gradient(to right, #fff, var(--primary-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: 1.05rem;
+        }
+
+        .track-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .track-item:hover {
+            background: rgba(244, 114, 182, 0.08);
+            border-color: var(--primary-pink);
+            transform: translateX(10px);
+        }
+
+        .track-icon {
+            margin-right: 20px;
+            color: var(--primary-purple);
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .track-item:hover .track-icon {
+            background: var(--primary-pink);
+            color: white;
+        }
+
+        .track-info h3 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .track-info p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .track-duration {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .track-item.playing {
+            background: linear-gradient(90deg, rgba(244, 114, 182, 0.15), transparent);
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 25px rgba(244, 114, 182, 0.25);
+        }
+
+        .track-item.playing .track-info h3 {
+            color: var(--primary-pink);
+        }
+
+        .track-item.playing .track-icon {
+            background: var(--primary-pink);
+            color: white;
+        }
+
+        .track-item.playing .track-icon i {
+            animation: pulseBeat 1s infinite;
+        }
+
+        @keyframes pulseBeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            border-left: 2px solid rgba(167, 139, 250, 0.35);
+            margin-left: 20px;
+        }
+
+        .timeline-box {
+            position: relative;
+            margin-left: 30px;
+            margin-bottom: 50px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s;
+        }
+
+        .timeline-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-purple);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-box::before {
+            content: "";
+            position: absolute;
+            left: -38px;
+            top: 25px;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-deep);
+            border: 3px solid var(--primary-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary-glow);
+            z-index: 1;
+        }
+
+        .date-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            background: linear-gradient(45deg,
+                    var(--primary-purple),
+                    var(--primary-pink));
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .box-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-family: var(--font-heading);
+            color: #fff;
+        }
+
+        .box-content h3 i {
+            color: var(--primary-pink);
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+
+        .box-content p {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 50px 15px;
+            width: 260px;
+            transform: rotate(-2deg);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .polaroid:hover {
+            transform: scale(1.1) rotate(0) !important;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: sepia(20%) contrast(1.1);
+        }
+
+        .caption {
+            color: #2e1065;
+            text-align: center;
+            margin-top: 15px;
+            font-family: "Playfair Display", serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .rotate-right {
+            transform: rotate(3deg);
+        }
+
+        .closing-section {
+            text-align: center;
+            padding-bottom: 50px;
+        }
+
+        .gradient-text-big {
+            font-size: 3rem;
+            font-family: var(--font-heading);
+            margin-bottom: 40px;
+            line-height: 1.3;
+        }
+
+        .highlight-pink {
+            background: linear-gradient(to right,
+                    var(--primary-pink),
+                    var(--primary-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glow-box {
+            background: rgba(255, 255, 255, 0.06);
+
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 0 60px rgba(167, 139, 250, 0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .heart-beat {
+            font-size: 2.5rem;
+            background: linear-gradient(to bottom right,
+                    var(--primary-pink),
+                    var(--primary-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: pulseHeart 1.5s infinite;
+            filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.5));
+        }
+
+        @keyframes pulseHeart {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .floating-flower {
+            position: fixed;
+            bottom: -50px;
+            font-size: 24px;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: floatUp linear forwards;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.8);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        #loveIcon {
+            cursor: pointer;
+        }
+
+        #loveIcon:active {
+            transform: scale(0.9);
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 50px;
+        }
+
+        .music-floater {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 10, 26, 0.85);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(244, 114, 182, 0.4);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 999;
+            opacity: 0;
+            box-shadow: 0 0 40px rgba(244, 114, 182, 0.25);
+            transition: bottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                opacity 0.5s ease;
+        }
+
+        .music-floater.show-player {
+            bottom: 30px;
+            opacity: 1;
+        }
+
+        .song-title {
+            font-size: 0.95rem;
+            width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white;
+            font-weight: 500;
+        }
+
+        .btn-control {
+            background: linear-gradient(135deg,
+                    var(--primary-pink),
+                    var(--primary-purple));
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-control:active {
+            transform: scale(0.9);
+        }
+
+        .equalizer {
+            display: flex;
+            gap: 3px;
+            height: 15px;
+            align-items: flex-end;
+        }
+
+        .equalizer span {
+            width: 3px;
+            background: var(--primary-pink);
+            height: 5px;
+            border-radius: 3px;
+        }
+
+        .music-playing .equalizer span {
+            animation: eq 1s infinite;
+        }
+
+        @keyframes eq {
+
+            0%,
+            100% {
+                height: 5px;
+            }
+
+            50% {
+                height: 100%;
+            }
+        }
+
+        .music-playing .equalizer span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .music-playing .equalizer span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .fade-text {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .gradient-text-big {
+                font-size: 2rem;
+            }
+
+            .timer-wrapper {
+                padding: 20px;
+                gap: 8px;
+            }
+
+            .time-segment span:first-child {
+                font-size: 1.8rem;
+            }
+
+            .separator {
+                font-size: 1.5rem;
+                margin-top: 0;
+            }
+
+            .polaroid {
+                width: 90%;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="welcomeScreen" class="welcome-overlay">
+        <div class="welcome-content">
+            <h1 id="typingText" class="fade-text">Website Kenangan</h1>
+            <p id="subText" class="fade-text-sub">Tempat menyimpan cerita kita.</p>
+            <button class="btn-open" onclick="enterWebsite()">
+                Lihat Cerita Kita
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-fixed"></div>
+    <div class="star-overlay"></div>
+
+    <main id="mainContent" class="hidden-content">
+        <section class="hero active">
+            <div class="hero-content">
+                <h1>Us, in Time.</h1>
+                <p class="subtitle">
+                    Setiap detik yang berlalu adalah cerita milik kita.
+                </p>
+
+                <div class="timer-wrapper">
+                    <div class="time-segment">
+                        <span id="days">00</span>
+                        <span class="label">Hari</span>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-segment">
+                        <span id="hours">00</span>
+                        <span class="label">Jam</span>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-segment">
+                        <span id="minutes">00</span>
+                        <span class="label">Menit</span>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-segment">
+                        <span id="seconds">00</span>
+                        <span class="label">Detik</span>
+                    </div>
+                </div>
+
+                <button onclick="scrollToSection('playlist')" class="scroll-indicator" aria-label="Scroll Down">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="playlist" class="section">
+            <div class="section-header reveal">
+                <h2>Lagu Favorit Kita</h2>
+                <p>Melodi yang selalu mengingatkanku padamu</p>
+            </div>
+
+            <div class="track-list reveal">
+                <div id="track-perfect" class="track-item" onclick="playSong('perfect')">
+                    <div class="track-icon"><i class="fas fa-play"></i></div>
+                    <div class="track-info">
+                        <h3>Perfect</h3>
+                        <p>Ed Sheeran</p>
+                    </div>
+                    <div class="track-duration">4:23</div>
+                </div>
+
+                <div id="track-thousand" class="track-item" onclick="playSong('thousand')">
+                    <div class="track-icon"><i class="fas fa-play"></i></div>
+                    <div class="track-info">
+                        <h3>A Thousand Years</h3>
+                        <p>Christina Perri</p>
+                    </div>
+                    <div class="track-duration">4:45</div>
+                </div>
+
+                <div id="track-allofme" class="track-item" onclick="playSong('allofme')">
+                    <div class="track-icon"><i class="fas fa-play"></i></div>
+                    <div class="track-info">
+                        <h3>All of Me</h3>
+                        <p>John Legend</p>
+                    </div>
+                    <div class="track-duration">4:29</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stories" class="section">
+            <div class="section-header reveal">
+                <h2>Jejak Kisah Kita</h2>
+                <p>
+                    Dari "hai" yang sederhana, hingga "jangan pergi" yang penuh makna.
+                    Ini adalah garis waktu favoritku.
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-box left reveal">
+                    <div class="date-badge">10 Jan 2023</div>
+                    <div class="box-content">
+                        <h3><i class="fas fa-comments"></i> Notifikasi Pertama</h3>
+                        <p>
+                            Berawal dari reply story atau pesan singkat yang canggung. Siapa
+                            sangka, notifikasi darimu hari itu adalah awal dari skenario
+                            terindah yang disiapkan semesta untukku.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-box right reveal">
+                    <div class="date-badge">14 Feb 2023</div>
+                    <div class="box-content">
+                        <h3><i class="fas fa-coffee"></i> Tatap Muka Pertama</h3>
+                        <p>
+                            Jantung berdebar lebih cepat dari biasanya. Di kedai kopi itu,
+                            aku melihat senyummu secara langsung untuk pertama kalinya.
+                            Detik itu aku tahu, aku ingin melihat senyum itu setiap hari.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-box left reveal">
+                    <div class="date-badge">20 Feb 2023</div>
+                    <div class="box-content">
+                        <h3><i class="fas fa-heart"></i> Kita Dimulai</h3>
+                        <p>
+                            Bukan lagi "aku" dan "kamu", tapi "kita". Hari dimana kita
+                            sepakat untuk saling menjaga, saling mengerti, dan berjalan
+                            beriringan. Tanggal ini akan selalu jadi sandi rahasia kita.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-box right reveal">
+                    <div class="date-badge">15 Mei 2023</div>
+                    <div class="box-content">
+                        <h3><i class="fas fa-moon"></i> Percakapan Tengah Malam</h3>
+                        <p>
+                            Malam itu, kita bicara tentang mimpi, ketakutan, dan masa depan
+                            hingga larut. Di sana aku sadar, kamu bukan sekadar pacar, tapi
+                            juga rumah tempatku pulang dan berbagi segala rasa.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-box left reveal">
+                    <div class="date-badge">10 Agt 2023</div>
+                    <div class="box-content">
+                        <h3>
+                            <i class="fas fa-plane-departure"></i> Petualangan Pertama
+                        </h3>
+                        <p>
+                            Matahari terbenam, suara ombak, dan tawa kita yang lepas.
+                            Perjalanan ini mengajarkanku bahwa tujuan destinasi itu tidak
+                            penting, asalkan teman perjalanannya adalah kamu.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-box right reveal">
+                    <div class="date-badge">12 Des 2023</div>
+                    <div class="box-content">
+                        <h3><i class="fas fa-gift"></i> Bertambah Usia Bersamamu</h3>
+                        <p>
+                            Meniup lilin di sampingmu terasa berbeda. Doaku sederhana:
+                            Semoga di tahun-tahun berikutnya, wajahmu lah yang selalu
+                            kulihat setiap kali aku membuka mata di hari bahagiaku.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header reveal">
+                <h2>Momen Terindah</h2>
+            </div>
+            <div class="gallery-container reveal">
+                <div class="polaroid rotate-left">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&auto=format&fit=crop"
+                        alt="Foto 1" />
+                    <div class="caption">Kita yang konyol</div>
+                </div>
+                <div class="polaroid rotate-right">
+                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=600&auto=format&fit=crop"
+                        alt="Foto 2" />
+                    <div class="caption">Senja bersamamu</div>
+                </div>
+                <div class="polaroid rotate-left">
+                    <img src="https://images.unsplash.com/photo-1621621667797-e06afc217fb0?w=600&auto=format&fit=crop"
+                        alt="Foto 3" />
+                    <div class="caption">Tempat favorit</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section closing-section reveal">
+            <div class="closing-content">
+                <h2 class="gradient-text-big">
+                    Setiap kenangan kita<br />tersimpan di sini,<br /><span class="highlight-pink">selamanya</span>
+                </h2>
+
+                <div class="glow-box">
+                    <i class="fas fa-heart heart-beat" id="loveIcon" onclick="createHeartShower()"></i>
+                    <p>
+                        Terima kasih sudah menjadi bagian dari hidupku. Setiap detik
+                        bersamamu adalah hadiah yang tak ternilai.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Dibuat dengan segenap hati, untuk Kamu.</p>
+        </footer>
+    </main>
+
+    <div class="music-floater" id="playerBar">
+        <div class="floater-info">
+            <div class="equalizer"><span></span><span></span><span></span></div>
+            <span id="currentSongTitle" class="song-title">Pilih lagu...</span>
+        </div>
+        <button onclick="toggleMusic()" class="btn-control" aria-label="Play Music">
+            <i class="fas fa-play" id="mainPlayIcon"></i>
+        </button>
+    </div>
+
+    <audio id="myAudio" loop>
+        <source src="myAudio/lagu-kotainitaksamatanpamu.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+        const welcomeTexts = [
+            { main: "Website Kenangan", sub: "Tempat menyimpan cerita kita." },
+            { main: "Untuk Kenangan Indah", sub: "Semua momen spesial tersimpan di sini." },
+            { main: "Untuk Aku dan Kamu", sub: "Terima kasih sudah menjadi bagian dari hidupku." }
+        ];
+
+        let textIndex = 0;
+        const mainTextElement = document.getElementById("typingText");
+        const subTextElement = document.getElementById("subText");
+        const audio = document.getElementById("myAudio");
+        const playIcon = document.getElementById("mainPlayIcon");
+        const songTitle = document.getElementById("currentSongTitle");
+        const playerContainer = document.querySelector(".music-floater");
+
+        let currentPlayingKey = null;
+
+        const songs = {
+            perfect: { url: "myAudio/lagu-perfect.mp3", title: "Perfect - Ed Sheeran" },
+            thousand: { url: "myAudio/lagu-thousand.mp3", title: "A Thousand Years" },
+            allofme: { url: "myAudio/lagu-allofme.mp3", title: "All of Me - John Legend" }
+        };
+
+        function changeText() {
+            mainTextElement.style.opacity = 0;
+            subTextElement.style.opacity = 0;
+
+            setTimeout(() => {
+                textIndex = (textIndex + 1) % welcomeTexts.length;
+                mainTextElement.innerText = welcomeTexts[textIndex].main;
+                subTextElement.innerText = welcomeTexts[textIndex].sub;
+
+                mainTextElement.style.opacity = 1;
+                subTextElement.style.opacity = 1;
+            }, 500);
+        }
+
+        let textInterval = setInterval(changeText, 3000);
+
+        function enterWebsite() {
+            clearInterval(textInterval);
+
+            const welcome = document.getElementById("welcomeScreen");
+            const main = document.getElementById("mainContent");
+
+            welcome.style.opacity = "0";
+            setTimeout(() => {
+                welcome.style.display = "none";
+                main.classList.add("show-content");
+                audio.volume = 0.5;
+                audio.play().catch(error => {
+                    console.log("Autoplay blocked:", error);
+                });
+            }, 800);
+        }
+
+        const startDate = new Date("2023-02-14T00:00:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }
+        setInterval(updateTimer, 1000);
+
+        window.addEventListener("scroll", reveal);
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        function playSong(key) {
+            const song = songs[key];
+            const playerBar = document.getElementById("playerBar");
+
+            if (currentPlayingKey === key) {
+                if (audio.paused) {
+                    audio.play();
+                    playerBar.classList.add("show-player");
+                    updatePlayerUI(true, song.title);
+                    updateListIcon(key, true);
+                } else {
+                    audio.pause();
+                    playerBar.classList.remove("show-player");
+                    updatePlayerUI(false, song.title);
+                    updateListIcon(key, false);
+                }
+            } else {
+                currentPlayingKey = key;
+                audio.src = song.url;
+                audio.volume = 1.0;
+                audio.play();
+
+                playerBar.classList.add("show-player");
+                updatePlayerUI(true, song.title);
+
+                resetAllListIcons();
+                updateListIcon(key, true);
+
+                const activeTrack = document.getElementById(`track-${key}`);
+                if (activeTrack) activeTrack.classList.add('playing');
+            }
+        }
+
+        function toggleMusic() {
+            if (!currentPlayingKey) return;
+
+            const playerBar = document.getElementById("playerBar");
+
+            if (audio.paused) {
+                audio.play();
+                playerBar.classList.add("show-player");
+                updatePlayerUI(true);
+                updateListIcon(currentPlayingKey, true);
+            } else {
+                audio.pause();
+                playerBar.classList.remove("show-player");
+                updatePlayerUI(false);
+                updateListIcon(currentPlayingKey, false);
+            }
+        }
+
+        function updateListIcon(key, isPlaying) {
+            const trackItem = document.getElementById(`track-${key}`);
+            if (trackItem) {
+                const icon = trackItem.querySelector('.track-icon i');
+                if (isPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                } else {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                }
+            }
+        }
+
+        function resetAllListIcons() {
+            document.querySelectorAll('.track-item').forEach(item => {
+                item.classList.remove('playing');
+                const icon = item.querySelector('.track-icon i');
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            });
+        }
+
+        function updatePlayerUI(isPlaying, title = null) {
+            if (title) songTitle.innerText = title;
+
+            if (isPlaying) {
+                playIcon.classList.remove("fa-play");
+                playIcon.classList.add("fa-pause");
+                playerContainer.classList.add("music-playing");
+            } else {
+                playIcon.classList.remove("fa-pause");
+                playIcon.classList.add("fa-play");
+                playerContainer.classList.remove("music-playing");
+            }
+        }
+
+        function createHeartShower() {
+            const container = document.body;
+            const colors = ["#ec4899", "#8b5cf6", "#d946ef", "#a855f7"];
+
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement("div");
+                heart.classList.add("floating-flower");
+
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.color = randomColor;
+
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+                heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+                heart.style.animationDelay = Math.random() + "s";
+
+                container.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
