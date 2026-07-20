@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .user-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .user-input {
+            padding: 12px 15px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+            border: 2px solid #dddd;
+            transition: all 0.3s ease;
+        }
+
+        .user-input:focus {
+            border-color: #3498db;
+        }
+
+        .user-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .user-card {
+            background-color: #ffffff;
+            padding: 20px 12px;
+            border-top: 5px solid #3498db;
+            border-radius: 12px;
+            scale: 0.9;
+            box-shadow: 4px 0px 8px black;
+            transition: all 0.4s ease;
+        }
+
+        .user-card:hover {
+
+            scale: 1;
+            border: none;
+            box-shadow: 0px 8px 8px #3498db;
+        }
+
+        .user-card h2 {
+            border-bottom: 1px solid #ccc;
+            color: darkblue;
+            padding-bottom: 10px;
+        }
+
+        .user-card p {
+            margin: 5px 0;
+        }
+
+        .skeleton {
+            background: #eee;
+            background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+            border-radius: 5px;
+            background-size: 200% 100%;
+            animation: shine 1.5s infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position-x: -200%;
+            }
+        }
+
+        .skeleton-title {
+            width: 60%;
+            height: 25px;
+            margin-bottom: 15px;
+        }
+
+        .skeleton-text {
+            width: 100%;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-text-short {
+            width: 80%;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="user-header">
+        <h1>User Directory</h1>
+        <input type="text" class="user-input" placeholder="Search By Name or Email...">
+    </div>
+    <div class="user-container"></div>
+    <script>
+        const userContainer = document.querySelector(".user-container");
+        const userInput = document.querySelector(".user-input");
+        let allUsers = [];
+        const rendorCards = (usersToRendor) => {
+            if (usersToRendor.length === 0) {
+                userContainer.innerHTML = `<p style="text-alig:center; color:red;">No User Were Found!</p>`
+                return
+            }
+            const html = usersToRendor.map(user => `
+                <div class="user-card">
+                <h2>${user.name}</h2>
+                <p><b>${user.email}</b></p>    
+                <p><b>${user.phone}</b></p>    
+                <p><b>${user.company.name}</b></p>    
+                </div>
+            `).join('')
+            userContainer.innerHTML = html
+        }
+        const rendorSkeleton = () => {
+            let skeleton = '';
+            for (let i = 0; i < 9; i++) {
+                skeleton += `
+                <div class="user-card">
+                <div class="skeleton skeleton-title"></div>    
+                <div class="skeleton skeleton-text"></div>    
+                <div class="skeleton skeleton-text-short"></div>    
+                <div class="skeleton skeleton-text"></div>    
+                    
+                </div>
+                `;
+                userContainer.innerHTML = skeleton;
+            }
+        }
+        const fetchUsers = async () => {
+            rendorSkeleton();
+            try {
+                const respones = await fetch("https://jsonplaceholder.typicode.com/users")
+                if (!respones.ok) {
+                    throw new Error("not founds");
+
+                }
+                allUsers = await respones.json();
+                setTimeout(() => { rendorCards(allUsers) }, 1000)
+            }
+            catch {
+                userContainer.innerHTML = "<p>No User were able to fetch</p>"
+            }
+        }
+        userInput.addEventListener("input", (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const fillteredUsers = allUsers.filter((e) => {
+                return e.name.toLowerCase().includes(searchTerm) || e.email.toLowerCase().includes(searchTerm)
+            })
+            rendorSkeleton();
+            setTimeout(() => { rendorCards(fillteredUsers); }, 500)
+        })
+
+        fetchUsers()
+
+    </script>
+</body>
+
+</html>
