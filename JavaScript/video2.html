@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .controls {
+            margin-top: 10px;
+            background: #eee;
+            padding: 10px;
+            width: 380px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <video id="state-video" width="400" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <div class="controls">
+        <div>Time: <span id="time-ui">0.00</span>s</div>
+        <div>Volume: <span id="vol-ui">100</span>%</div>
+        <div>Speed: <span id="speed-ui">1</span>x</div>
+        <br>
+        <!-- Buttons to manually trigger rate and volume changes -->
+        <button onclick="document.getElementById('state-video').playbackRate = 2.0">2x Speed</button>
+        <button onclick="document.getElementById('state-video').volume = 0.5">50% Volume</button>
+    </div>
+
+    <script>
+        const stVid = document.getElementById('state-video');
+        const timeUi = document.getElementById('time-ui');
+        const volUi = document.getElementById('vol-ui');
+        const speedUi = document.getElementById('speed-ui');
+
+        // 10. timeupdate
+        stVid.addEventListener('timeupdate', () => {
+            timeUi.innerText = stVid.currentTime.toFixed(2);
+        });
+
+        // 11. volumechange
+        stVid.addEventListener('volumechange', () => {
+            if (stVid.muted) {
+                volUi.innerText = "MUTED";
+            } else {
+                volUi.innerText = Math.round(stVid.volume * 100);
+            }
+        });
+
+        // 12. ratechange
+        stVid.addEventListener('ratechange', () => {
+            speedUi.innerText = stVid.playbackRate;
+        });
+    </script>
+</body>
+
+</html>

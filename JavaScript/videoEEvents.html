@@ -1,0 +1,55 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<body>
+    <video id="playback-video" width="400" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <h4 id="playback-status" style="color: blue;">Video is ready</h4>
+
+    <script>
+        const pbVideo = document.getElementById('playback-video');
+        const pbStatus = document.getElementById('playback-status');
+
+        pbVideo.addEventListener('play', () => {
+            pbStatus.innerText = "Play button clicked. Attempting to start...";
+            pbStatus.style.color = "orange";
+        });
+
+        pbVideo.addEventListener('playing', () => {
+            pbStatus.innerText = "Frames are moving! Video is actively playing.";
+            pbStatus.style.color = "green";
+        });
+
+        pbVideo.addEventListener('pause', () => {
+            pbStatus.innerText = "Video is paused.";
+            pbStatus.style.color = "red";
+        });
+    </script>
+</body>
+
+</html> 
+-->
+
+<!-- <!DOCTYPE html>
+<html>
+
+<body>
+    <video id="status-video" width="400" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <h4 id="state-status">Waiting for user action...</h4>
+
+    <script>
+        const stVideo = document.getElementById('status-video');
+        const stStatus = document.getElementById('state-status');
+
+        stVideo.addEventListener('waiting', () => {
+            stStatus.innerText = "Buffering... Please wait. ⏳";
+        });
+
+        stVideo.addEventListener('ended', () => {
+            stStatus.innerText = "Video finished! Thanks for watching. 🎉";
+        });
+    </script>
+</body> -->

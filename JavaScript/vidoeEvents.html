@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/02m_3sH7440?si=yKSAT43qqple_wp-"
+        title="YouTube video player" frameborder="0" id="myvid"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <h4 id="data"></h4>
+    <script>
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                console.log("Video is playing!");
+            }
+        }
+        const video = document.querySelector("#myvid")
+        const data = document.querySelector("#data")
+        video.addEventListener("play", onPlayerStateChange)
+        video.addEventListener("play", (e) => {
+            data.innerHTML = "Your Video is being Played"
+            console.log(e)
+        })
+        video.addEventListener("playing", (e) => {
+            data.innerHTML = "Your Video chal rhi hai"
+            console.log(e)
+        })
+        video.addEventListener("pause", (e) => {
+            data.innerHTML = "Your Video Stop ho gyi"
+            console.log(e)
+        })
+        video.addEventListener("waiting", (e) => {
+            data.innerHTML = "net slow hai "
+            console.log(e)
+        })
+        video.addEventListener("ended", (e) => {
+            data.innerHTML = "video End ho gyi "
+            console.log(e)
+        })
+        video.addEventListener("loadstart", (e) => {
+            data.innerHTML = "video load ho rhi hai "
+            console.log(e)
+        })
+        video.addEventListener("loadedmetadata", (e) => {
+            data.innerHTML = "video ka data load  ho rha  "
+            console.log(e)
+        })
+
+    </script>
+</body>
+
+</html>

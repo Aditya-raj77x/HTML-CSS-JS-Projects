@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <video id="loading-video" width="400" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <ul id="loading-log"></ul>
+
+    <script>
+        const loadVideo = document.getElementById('loading-video');
+        const loadLog = document.getElementById('loading-log');
+
+        function logEvent(msg) {
+            const li = document.createElement('li');
+            li.innerText = msg;
+            loadLog.appendChild(li);
+        }
+
+        loadVideo.addEventListener('loadstart', () => logEvent('1. loadstart: Finding the file...'));
+
+        loadVideo.addEventListener('loadedmetadata', () => {
+            logEvent(`2. loadedmetadata: Video duration is ${Math.round(loadVideo.duration)} seconds.`);
+        });
+
+        loadVideo.addEventListener('canplay', () => logEvent('3. canplay: Enough data to start playing!'));
+
+        loadVideo.addEventListener('canplaythrough', () => logEvent('4. canplaythrough: Ready to play to the end without buffering!'));
+    </script>
+</body>
+
+</html>
