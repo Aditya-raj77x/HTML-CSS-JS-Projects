@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            height: 2px;
+            width: 2px;
+            position: absolute;
+
+            background-color: dodgerblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>X cordinate <span class="Xcordinate"></span></h2>
+        <h2>Y cordinate <span class="Ycondinate"></span></h2>
+        <h2>count <span class="count"></span></h2>
+    </div>
+    <script>
+        let c = 0;
+        let x = document.querySelector(".Xcordinate")
+        let y = document.querySelector(".Ycondinate")
+        let count = document.querySelector(".count")
+        document.addEventListener("mousemove", (e) => {
+            // console.log(e)
+            c++
+            x.innerHTML = e.clientX
+            y.innerHTML = e.clientY
+            count.innerHTML = c
+            const div = document.createElement("div");
+            div.style = `
+                height: 5px;
+                width: 5px;
+                position: absolute;
+                background-color: dodgerblue;
+                top:${e.clientY}px;
+                left:${e.clientX}px;
+
+            `
+            document.body.appendChild(div)
+
+            // div.classList.add("box")
+            // div.style.top = e.clientY
+            // div.style.left = e.clientX
+            console.log(c)
+
+        })
+    </script>
+</body>
+
+</html>
