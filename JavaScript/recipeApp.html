@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="search">
+        <input type="text" placeholder="Enter Food Name">
+        <button>Search For Recipe</button>
+
+    </header>
+    <div class="recipe-container"></div>
+    <script>
+        const app_key = "6608861c037cb92bff11639adaa44b25"
+        const app_id = "7eab75e8"
+        const url = "https://api.edamam.com/api/recipes/v2"
+        const inputBox = document.querySelector(".search input");
+        const btn = document.querySelector(".search button")
+        const recipeContainer = document.querySelector(".recipe-container");
+
+        btn.addEventListener("click", async () => {
+            const query = inputBox.value;
+            try {
+                const endpoint = `${url}?type=public&q=${query}&app_id=${app_id}&app_key=${app_key}`
+                const respone = await fetch(endpoint);
+                const recipe = await respone.json();
+                console.log(recipe)
+                const recipes = recipe.hits;
+
+                let generatedHTML = "";
+                recipes.forEach((item) => {
+                    const recipeData = item.recipe;
+
+                    // Clean up the data a bit
+                    const calories = Math.round(recipeData.calories); // Rounds 2616.94... to 2617
+                    const cuisine = recipeData.cuisineType ? recipeData.cuisineType[0] : "Unknown"; // Grabs the first item in the array
+
+                    // Convert the array of ingredients into a string of <li> tags
+                    const ingredientsListHTML = recipeData.ingredientLines.map(ingredient => {
+                        return `<li>${ingredient}</li>`
+                    }).join("");
+
+                    generatedHTML += `
+        <div class="recipe-card" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
+            <h2>${recipeData.label}</h2>
+            <p><strong>Cuisine:</strong> <span style="text-transform: capitalize;">${cuisine}</span> | <strong>Calories:</strong> ${calories}</p>
+            
+            <img src="${recipeData.image}" alt="${recipeData.label}" style="max-width: 300px; border-radius: 8px;">
+            
+            <h3>Ingredients:</h3>
+            <ul>
+                ${ingredientsListHTML}
+            </ul>
+            
+            <a href="${recipeData.url}" target="_blank" style="display: inline-block; margin-top: 10px; padding: 10px 15px; background: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+                View Full Recipe on ${recipeData.source}
+            </a>
+        </div>
+    `;
+                });
+
+                // 5. Inject the final HTML block into the DOM
+                recipeContainer.innerHTML = generatedHTML;
+            }
+            catch (error) {
+                console.log(`error is ${error}`)
+            }
+        })
+
+    </script>
+</body>
+
+</html>
