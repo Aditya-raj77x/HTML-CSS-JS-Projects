@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="search">
+        <input type="text" placeholder="Enter Food Name">
+        <button>Search for Recipe</button>
+    </header>
+    <div class="recipe-container"></div>
+    <script>
+        // https://api.edamam.com/api/recipes/v2?type=public&q=pizza&app_id=68a166d7&app_key=2313dd94746935848f3d50b7d1314769
+        const app_id = "68a166d7"
+        const app_key = "2313dd94746935848f3d50b7d1314769"
+        const url = "https://api.edamam.com/api/recipes/v2"
+        const inputBox = document.querySelector(".search input")
+        const button = document.querySelector(".search button")
+        const recipeCOntainer = document.querySelector(".recipe-container")
+        button.addEventListener("click", async () => {
+            const query = inputBox.value;
+            try {
+                const endpoint = `${url}?type=public&q=${query}&app_id=${app_id}&app_key=${app_key}`
+                const respones = await fetch(endpoint)
+                // if (!endpoint.ok) { throw new Error("something went wrong") }
+                const recipeObj = await respones.json()
+                console.log(recipeObj)
+                const recipes = recipeObj.hits
+                recipeCOntainer.innerHTML = ""
+                let generatedHTML = ""
+                recipes.forEach((item) => {
+                    const recipeDate = item.recipe
+
+                    const title = recipeDate.label
+                    const imageSrc = recipeDate.image
+                    const sourceWeb = recipeDate.source
+                    const recipeLink = recipeDate.url
+                    const calories = parseInt(recipeDate.calories)
+                    let ingredientLines = ""
+                    recipeDate.ingredientLines.forEach((e) => {
+                        ingredientLines += `<li>${e}</li>`
+                    })
+                    generatedHTML += `
+                    <div class="recipeCard">
+                        <h2 class="title">${title}</h2>
+                        <img src="${imageSrc}" alt="${title}">
+                        <div class="recipeDetails">
+                            <p><strong>Source:</strong>${sourceWeb}</p>    
+                            <p><strong>Calories: </strong>${calories}</p>    
+                        </div>
+                        <div class="recipeIngredient">
+                            <h3>ingredient</h3>
+                            <ul>
+                                ${ingredientLines}    
+                            </ul>
+                        </div>
+                        <a href="${recipeLink}" target="_b" class="viewBtn">View Full Recipe </a>
+                        <hr>
+                        
+                    </div>
+                    `
+
+                });
+                recipeCOntainer.innerHTML = generatedHTML
+            }
+            catch (error) {
+                console.log(`you got this error : ${error}`)
+            }
+        })
+    </script>
+</body>
+
+</html>
